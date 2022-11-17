@@ -5,7 +5,7 @@ use Slim\Factory\AppFactory;
 use Tuupola\Middleware\HttpBasicAuthentication;
 use \Firebase\JWT\JWT;
 require __DIR__ . '/../vendor/autoload.php';
- 
+
 const JWT_SECRET = "makey1234567";
 
 $app = AppFactory::create();
@@ -17,6 +17,24 @@ $app->get('/api/hello/{name}', function (Request $request, Response $response, $
     $response->getBody()->write(json_encode ($array));
     return $response;
 });
+
+
+function createJwT (Response $response) : Response {
+
+    $issuedAt = time();
+    $expirationTime = $issuedAt + 60;
+    $payload = array(
+    'userid' => 'toto',
+    'email' => 'titi@gmail.com',
+    'pseudo' => 'titiPseudo',
+    'iat' => $issuedAt,
+    'exp' => $expirationTime
+    );
+
+    $token_jwt = JWT::encode($payload,JWT_SECRET, "HS256");
+    $response = $response->withHeader("Authorization", "Bearer {$token_jwt}");
+    return $response;
+}
 
 $options = [
     "attribute" => "token",
