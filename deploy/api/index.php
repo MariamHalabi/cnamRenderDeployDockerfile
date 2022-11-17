@@ -36,6 +36,13 @@ function createJwT (Response $response) : Response {
     return $response;
 }
 
+$app->get('/api/user', function (Request $request, Response $response, $args) {
+    $data = array('nom' => 'toto', 'prenom' => 'titi','adresse' => '6 rue des fleurs', 'tel' => '0606060607');
+    $response->getBody()->write(json_encode($data));
+
+    return $response;
+});
+
 $app->post('/api/login', function (Request $request, Response $response, $args) {
     $err=false;
     $body = $request->getParsedBody();
