@@ -22,7 +22,7 @@ $app->get('/api/hello/{name}', function (Request $request, Response $response, $
 function createJwT (Response $response) : Response {
 
     $issuedAt = time();
-    $expirationTime = $issuedAt + 60;
+    $expirationTime = $issuedAt + 600;
     $payload = array(
     'userid' => 'toto',
     'email' => 'titi@gmail.com',
